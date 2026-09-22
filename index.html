@@ -62,6 +62,22 @@ section{padding:125px 5%}.section-head{display:flex;justify-content:space-betwee
 form{background:#0d0d0d;border:1px solid var(--line);padding:30px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:17px}.field label{display:block;color:#888;font-size:9px;letter-spacing:2px;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;background:#080808;border:1px solid var(--line);padding:13px;border-radius:6px;outline:none}.field textarea{min-height:130px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}footer{padding:55px 5% 25px;border-top:1px solid var(--line)}.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}.footlinks{display:flex;gap:22px;flex-wrap:wrap}.footlinks a{font-size:11px;color:#777}.socials{display:flex;gap:10px}.socials a{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:#777}.socials a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}.copyright{margin-top:35px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:#555;display:flex;justify-content:space-between}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:5000;display:none;place-items:center;padding:20px}.modal.open{display:grid}.modalbox{width:min(1050px,100%)}.modalbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.modalbar h3{font:600 18px "Space Grotesk"}.close{background:none;border:1px solid var(--line);width:40px;height:40px;border-radius:50%}.videobox{aspect-ratio:16/9;background:#000}.videobox iframe{width:100%;height:100%;border:0}
 .reveal{opacity:0;transform:translateY(30px);transition:1s var(--ease)}.reveal.show{opacity:1;transform:none}
+
+/* --- cinema-gate scroll reveal: mimics a projector shutter opening on each frame, with a scanning light sweep --- */
+.stagger-item{position:relative;overflow:hidden;clip-path:inset(0 100% 0 0);transition:clip-path 1.05s cubic-bezier(.16,1,.3,1)}
+.stagger-item.show{clip-path:inset(0 0 0 0)}
+.stagger-item:before{content:"";position:absolute;top:0;bottom:0;left:0;width:2px;background:linear-gradient(180deg,transparent,var(--accent),transparent);opacity:0;z-index:5;pointer-events:none}
+.stagger-item.show:before{animation:scanSweep 1.05s cubic-bezier(.16,1,.3,1)}
+@keyframes scanSweep{0%{left:0;opacity:1}85%{opacity:.9}100%{left:100%;opacity:0}}
+
+/* --- hero film-leader reveal: each line rises through a shutter gate on load, like a countdown leader --- */
+.hero h1{overflow:visible}
+.hline{display:block;overflow:hidden;line-height:.82}
+.hline span{display:inline-block;transform:translateY(105%);opacity:0}
+.hline.go span{animation:leaderUp .9s cubic-bezier(.16,1,.3,1) forwards}
+
+@keyframes leaderUp{to{transform:translateY(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.stagger-item{clip-path:none!important;transition:none!important}.stagger-item:before{display:none!important}.hline span{transform:none!important;opacity:1!important;animation:none!important}}
 @media(max-width:1000px){.services{grid-template-columns:repeat(2,1fr)}.workgrid .project{grid-column:span 6}.editing-hero,.sekai-inner,.aboutgrid,.contactgrid{grid-template-columns:1fr;gap:45px}.editgrid{grid-template-columns:1fr 1fr}.process{grid-template-columns:repeat(2,1fr)}.threegrid{grid-template-columns:1fr}.render.large{grid-row:auto}.episode-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:800px){.navlinks{position:absolute;top:72px;left:0;width:100%;background:#080808;display:none;flex-direction:column;align-items:flex-start;padding:25px 6%;gap:20px}.navlinks.open{display:flex}.menu{display:block}.hero-bottom,.section-head,.brandline{flex-direction:column;align-items:flex-start}.hero h1{font-size:clamp(58px,16vw,100px)}}
 @media(max-width:650px){section{padding:90px 6%}.services,.workgrid,.editgrid,.process,.episode-grid{grid-template-columns:1fr}.workgrid .project{grid-column:span 1}.row{grid-template-columns:1fr}.copyright{flex-direction:column}.hero{padding:125px 6% 80px}.buttons{width:100%}.btn{width:100%}.section-head{margin-bottom:35px}}
@@ -84,7 +100,7 @@ form{background:#0d0d0d;border:1px solid var(--line);padding:30px}.row{display:g
 <section class="hero">
   <div class="hero-inner">
     <div class="eyebrow">PHANTOM FRAMES — CREATIVE STUDIO</div>
-    <h1>I CREATE<br>VISUALS<br>THAT <span class="outline">FEEL ALIVE.</span></h1>
+    <h1><span class="hline"><span>I CREATE</span></span><span class="hline"><span>VISUALS</span></span><span class="hline"><span>THAT <span class="outline">FEEL ALIVE.</span></span></span></h1>
     <div class="hero-bottom">
       <p class="hero-copy">Animation. 3D. Editing. Motion. Visual storytelling.<br>Building worlds, shaping stories, and turning ideas into visuals.</p>
       <div class="buttons"><a class="btn primary" href="#work">VIEW WORK <i class="fa-solid fa-arrow-down"></i></a><a class="btn ghost" href="#contact">START A PROJECT <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
@@ -106,12 +122,12 @@ form{background:#0d0d0d;border:1px solid var(--line);padding:30px}.row{display:g
 <section id="animation" class="reveal">
   <div class="section-head"><div><div class="eyebrow">01 — WHAT I DO</div><h2 class="title">VISUAL<br>CRAFT.</h2></div><p class="desc">A creative toolkit built around cinematic storytelling — from hand-drawn frames and 3D worlds to fast-paced commercial edits.</p></div>
   <div class="services">
-    <article class="service"><span class="num">01</span><i class="fa-solid fa-wand-magic-sparkles"></i><h3>2D / 2.5D Animation</h3><p>Character animation, cinematic sequences and story-driven visual development.</p></article>
-    <article class="service"><span class="num">02</span><i class="fa-solid fa-cube"></i><h3>3D Modeling</h3><p>Characters, props, environments, lighting studies and cinematic renders.</p></article>
-    <article class="service"><span class="num">03</span><i class="fa-solid fa-film"></i><h3>Video Editing</h3><p>YouTube, short-form, cinematic, promotional and social media editing.</p></article>
-    <article class="service"><span class="num">04</span><i class="fa-solid fa-bolt"></i><h3>Motion Graphics</h3><p>Animated typography, transitions, visual effects and promotional graphics.</p></article>
-    <article class="service"><span class="num">05</span><i class="fa-solid fa-bullhorn"></i><h3>Commercial Content</h3><p>Product visuals, advertisements, brand content and social campaigns.</p></article>
-    <article class="service"><span class="num">06</span><i class="fa-solid fa-book-open"></i><h3>Storytelling</h3><p>Original concepts, visual narratives and cinematic sequences built from scratch.</p></article>
+    <article class="service stagger-item"><span class="num">01</span><i class="fa-solid fa-wand-magic-sparkles"></i><h3>2D / 2.5D Animation</h3><p>Character animation, cinematic sequences and story-driven visual development.</p></article>
+    <article class="service stagger-item"><span class="num">02</span><i class="fa-solid fa-cube"></i><h3>3D Modeling</h3><p>Characters, props, environments, lighting studies and cinematic renders.</p></article>
+    <article class="service stagger-item"><span class="num">03</span><i class="fa-solid fa-film"></i><h3>Video Editing</h3><p>YouTube, short-form, cinematic, promotional and social media editing.</p></article>
+    <article class="service stagger-item"><span class="num">04</span><i class="fa-solid fa-bolt"></i><h3>Motion Graphics</h3><p>Animated typography, transitions, visual effects and promotional graphics.</p></article>
+    <article class="service stagger-item"><span class="num">05</span><i class="fa-solid fa-bullhorn"></i><h3>Commercial Content</h3><p>Product visuals, advertisements, brand content and social campaigns.</p></article>
+    <article class="service stagger-item"><span class="num">06</span><i class="fa-solid fa-book-open"></i><h3>Storytelling</h3><p>Original concepts, visual narratives and cinematic sequences built from scratch.</p></article>
   </div>
 </section>
 
@@ -127,16 +143,16 @@ form{background:#0d0d0d;border:1px solid var(--line);padding:30px}.row{display:g
     <p class="editing-copy">Editing isn't just about cutting footage. It's about controlling attention, rhythm and emotion. This section is built specifically so potential clients can immediately understand that Phantom Frames also handles professional editing.</p>
   </div>
   <div class="editgrid">
-    <article class="editcard"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=80" alt="Cinematic editing"><div><small>CINEMATIC</small><h3>Story / Film Edit</h3><p>Pacing, rhythm, sound and visual storytelling.</p></div></article>
-    <article class="editcard"><img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1000&q=80" alt="Video editing setup"><div><small>YOUTUBE</small><h3>Long-form Edit</h3><p>Structure, retention-focused pacing and polish.</p></div></article>
-    <article class="editcard"><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1000&q=80" alt="Social media editing"><div><small>SHORT-FORM</small><h3>Reels / Shorts</h3><p>Fast hooks, captions, motion and social-first pacing.</p></div></article>
+    <article class="editcard stagger-item"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=80" alt="Cinematic editing"><div><small>CINEMATIC</small><h3>Story / Film Edit</h3><p>Pacing, rhythm, sound and visual storytelling.</p></div></article>
+    <article class="editcard stagger-item"><img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1000&q=80" alt="Video editing setup"><div><small>YOUTUBE</small><h3>Long-form Edit</h3><p>Structure, retention-focused pacing and polish.</p></div></article>
+    <article class="editcard stagger-item"><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1000&q=80" alt="Social media editing"><div><small>SHORT-FORM</small><h3>Reels / Shorts</h3><p>Fast hooks, captions, motion and social-first pacing.</p></div></article>
   </div>
   <div class="process">
-    <div class="step"><b>01</b><h4>UNDERSTAND</h4><p>Story, audience and objective.</p></div>
-    <div class="step"><b>02</b><h4>STRUCTURE</h4><p>Build the narrative and pacing.</p></div>
-    <div class="step"><b>03</b><h4>EDIT</h4><p>Cut footage and build rhythm.</p></div>
-    <div class="step"><b>04</b><h4>ENHANCE</h4><p>Sound, motion, color and VFX.</p></div>
-    <div class="step"><b>05</b><h4>FINALIZE</h4><p>Polish every frame and deliver.</p></div>
+    <div class="step stagger-item"><b>01</b><h4>UNDERSTAND</h4><p>Story, audience and objective.</p></div>
+    <div class="step stagger-item"><b>02</b><h4>STRUCTURE</h4><p>Build the narrative and pacing.</p></div>
+    <div class="step stagger-item"><b>03</b><h4>EDIT</h4><p>Cut footage and build rhythm.</p></div>
+    <div class="step stagger-item"><b>04</b><h4>ENHANCE</h4><p>Sound, motion, color and VFX.</p></div>
+    <div class="step stagger-item"><b>05</b><h4>FINALIZE</h4><p>Polish every frame and deliver.</p></div>
   </div>
 
   <div class="section-head" style="margin-top:90px;margin-bottom:35px">
@@ -153,9 +169,9 @@ form{background:#0d0d0d;border:1px solid var(--line);padding:30px}.row{display:g
 <section id="three" class="three reveal">
   <div class="section-head"><div><div class="eyebrow">04 — 3D WORLDS</div><h2 class="title">BUILD<br>WORLDS.</h2></div><p class="desc">Characters. Environments. Props. Lighting. Cinematic renders. Use this area for your strongest 3D portfolio pieces.</p></div>
   <div class="threegrid">
-    <div class="render large"><img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1400&q=85" alt="3D cinematic world"><span class="render-label">Cinematic Environment</span></div>
-    <div class="render"><img src="https://images.unsplash.com/photo-1633412802994-5c058f151b66?auto=format&fit=crop&w=1000&q=85" alt="3D asset"><span class="render-label">Asset / Prop</span></div>
-    <div class="render"><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1000&q=85" alt="3D abstract render"><span class="render-label">Lighting Study</span></div>
+    <div class="render large stagger-item"><img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1400&q=85" alt="3D cinematic world"><span class="render-label">Cinematic Environment</span></div>
+    <div class="render stagger-item"><img src="https://images.unsplash.com/photo-1633412802994-5c058f151b66?auto=format&fit=crop&w=1000&q=85" alt="3D asset"><span class="render-label">Asset / Prop</span></div>
+    <div class="render stagger-item"><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1000&q=85" alt="3D abstract render"><span class="render-label">Lighting Study</span></div>
   </div>
 </section>
 
@@ -165,9 +181,9 @@ form{background:#0d0d0d;border:1px solid var(--line);padding:30px}.row{display:g
     <div class="render"><img id="sekaiThumb" src="https://i.ytimg.com/vi/4KrVnXvK6N8/maxresdefault.jpg" alt="SEKAI animated series"><span class="render-label">An Original Animated Universe</span></div>
   </div>
   <div class="episode-grid" id="episodeGrid">
-    <article class="episode"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 01"><div><small>EPISODE 01</small><h3>DEPARTURE</h3></div></article>
-    <article class="episode"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 02"><div><small>EPISODE 02</small><h3>THE JOURNEY</h3></div></article>
-    <article class="episode"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 03"><div><small>EPISODE 03</small><h3>THE AWAKENING</h3></div></article>
+    <article class="episode stagger-item"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 01"><div><small>EPISODE 01</small><h3>DEPARTURE</h3></div></article>
+    <article class="episode stagger-item"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 02"><div><small>EPISODE 02</small><h3>THE JOURNEY</h3></div></article>
+    <article class="episode stagger-item"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 03"><div><small>EPISODE 03</small><h3>THE AWAKENING</h3></div></article>
   </div>
 </section>
 
@@ -217,9 +233,7 @@ const CONFIG={
 };
 
 const projects=[
- {title:"SEKAI — Episode 01",cat:"ANIMATION",year:"2026",desc:"Original animated series / Departure",img:"https://i.ytimg.com/vi/4KrVnXvK6N8/maxresdefault.jpg",video:CONFIG.sekaiVideoId},
- {title:"SEKAI — Episode 02",cat:"ANIMATION",year:"2026",desc:"Original series / Episode 02",img:"https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg",video:CONFIG.sekaiVideoId},
- {title:"SEKAI — Episode 03",cat:"ANIMATION",year:"2026",desc:"Original series / Cinematic",img:"https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg",video:CONFIG.sekaiVideoId},
+ {title:"SEKAI — Episode 01",cat:"ANIMATION",year:"2026",desc:"Original animated series / Departure",img:"https://i.ytimg.com/vi/4KrVnXvK6N8/maxresdefault.jpg",video:CONFIG.sekaiVideoId,sekaiPlaceholder:true},
  {title:"Cinematic 3D Environment",cat:"3D",year:"2026",desc:"Environment / Lighting / Render",img:"https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=85"},
  {title:"Product Commercial",cat:"COMMERCIAL",year:"2026",desc:"Brand / Product / 30 sec",img:"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85"},
  {title:"Short-form Social Edit",cat:"EDITING",year:"2026",desc:"Reels / Shorts / Motion",img:"https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=85"}
@@ -245,9 +259,9 @@ async function loadEditingChannel(){
   if(!target) return;
 
   target.innerHTML = `
-    <article class="editcard"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>
-    <article class="editcard"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>
-    <article class="editcard"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>`;
+    <article class="editcard stagger-item"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>
+    <article class="editcard stagger-item"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>
+    <article class="editcard stagger-item"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>`;
 
   try{
     const cacheKey="phantom_editing_feed_v1";
@@ -303,6 +317,7 @@ async function loadEditingChannel(){
       card.addEventListener("click",()=>openVideo(v.id,v.title));
       target.appendChild(card);
     });
+    staggerReveal(target.querySelectorAll(".editcard"),70);
 
   }catch(err){
     console.error("Editing YouTube feed error:",err);
@@ -355,6 +370,18 @@ async function loadSekaiChannel(){
     if(thumb) thumb.src = `https://i.ytimg.com/vi/${latest.id}/maxresdefault.jpg`;
     if(watchBtn) watchBtn.onclick = e => { e.preventDefault(); openVideo(latest.id, latest.title); };
 
+    // feed the real episodes into the "Recent Frames" grid too, so ANIMATION isn't just one repeated video
+    const sekaiCards = items.slice(0,6).map((v,i)=>({
+      title:`SEKAI — ${v.title}`,
+      cat:"ANIMATION",
+      year:new Date(v.date).getFullYear().toString(),
+      desc:`Original animated series / Episode ${i+1}`,
+      img:`https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`,
+      video:v.id
+    }));
+    projects.splice(0, projects.length, ...sekaiCards, ...projects.filter(p=>!p.sekaiPlaceholder));
+    renderProjects();
+
     target.innerHTML="";
     items.slice(0,6).forEach((v,i)=>{
       const card=document.createElement("article");
@@ -368,6 +395,7 @@ async function loadSekaiChannel(){
       card.addEventListener("click",()=>openVideo(v.id,v.title));
       target.appendChild(card);
     });
+    staggerReveal(target.querySelectorAll(".episode"),90);
 
   }catch(err){
     console.error("SEKAI YouTube feed error:",err);
@@ -376,24 +404,58 @@ async function loadSekaiChannel(){
     target.querySelectorAll(".episode").forEach(card=>{
       card.addEventListener("click",()=>openVideo(CONFIG.sekaiVideoId,"SEKAI"));
     });
+    staggerReveal(target.querySelectorAll(".episode"),90);
   }
 }
 
 filters.forEach((f,i)=>{const b=document.createElement("button");b.className="filter"+(i===0?" active":"");b.textContent=f;b.onclick=()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProjects(f)};filtersEl.appendChild(b)});
 
-function renderProjects(filter="ALL"){
+// --- creative scroll reveal: staggers each card in, one after another, with blur+scale+tilt ---
+let staggerIO=null;
+function getStaggerIO(){
+ if(staggerIO) return staggerIO;
+ if(!("IntersectionObserver" in window)){staggerIO={observe:el=>el.classList.add("show")};return staggerIO}
+ staggerIO=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add("show");staggerIO.unobserve(e.target)}
+ }),{threshold:.15});
+ return staggerIO;
+}
+function staggerReveal(elements,stepMs=90){
+ const io=getStaggerIO();
+ [...elements].forEach((el,i)=>{
+  el.classList.add("stagger-item");
+  el.style.transitionDelay=(i%8*stepMs)+"ms";
+  io.observe(el);
+ });
+}
+
+let activeFilter="ALL";
+function renderProjects(filter=activeFilter){
+ activeFilter=filter;
  grid.innerHTML="";
  const list=projects.filter(p=>filter==="ALL"||p.cat===filter);
  list.forEach(p=>{
-  const el=document.createElement("article");el.className="project reveal show";
+  const el=document.createElement("article");el.className="project";
   el.innerHTML=`<div class="project-media"><img src="${p.img}" alt="${p.title}" loading="lazy"><div class="hoverplay"><span class="playcircle"><i class="fa-solid fa-play"></i></span></div></div><div class="project-info"><small>${p.cat} • ${p.year}</small><h3>${p.title}</h3><p>${p.desc}</p></div>`;
   el.onclick=()=>p.video?openVideo(p.video,p.title):null;
   grid.appendChild(el);
  });
+ staggerReveal(grid.querySelectorAll(".project"));
 }
 renderProjects();
 loadEditingChannel();
 loadSekaiChannel();
+
+// stagger the cards that were already in the HTML (services, static editcards, process steps, 3D renders)
+staggerReveal(document.querySelectorAll(".service"));
+staggerReveal(document.querySelectorAll(".editing .editgrid .editcard"),70);
+staggerReveal(document.querySelectorAll(".process .step"),80);
+staggerReveal(document.querySelectorAll(".threegrid .render"),120);
+
+// one orchestrated load moment: hero lines rise through the shutter like a film-leader countdown
+document.querySelectorAll(".hline").forEach((el,i)=>{
+ setTimeout(()=>el.classList.add("go"), 250 + i*180);
+});
 
 function openVideo(id,title="Now playing"){
  document.getElementById("modalTitle").textContent=title;
