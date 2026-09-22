@@ -2,831 +2,431 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Phantom Frames — Animation • VFX • 3D Worlds</title>
-<meta name="description" content="Phantom Frames is an independent studio creating animation, VFX, 3D worlds, filmmaking and original IP.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phantom Frames — Animation, 3D & Video Editing</title>
+<meta name="description" content="Phantom Frames — Animation, 3D, video editing, motion graphics and cinematic visual storytelling.">
 <meta name="theme-color" content="#050505">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Phantom Frames — Animation • VFX • 3D Worlds">
-<meta property="og:description" content="Independent studio: animation, VFX, 3D worlds, filmmaking and original IP.">
+<meta property="og:title" content="Phantom Frames — Animation, 3D & Video Editing">
+<meta property="og:description" content="Cinematic animation, 3D, editing, motion graphics and original visual stories.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23050505'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23ff1717'/%3E%3C/svg%3E">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-:root{
-  --red:#ff1717;
-  --bg:#050505;
-  --surface:#0f0f0f;
-  --surface2:#151515;
-  --white:#f5f5f5;
-  --muted:#8a8a8a;
-  --border:rgba(255,255,255,.10);
-  --nav-h:68px;
-  --ease:cubic-bezier(.2,.7,.2,1);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
-body{background:var(--bg);color:var(--white);font-family:Inter,system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-button{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--red);outline-offset:3px}
-::selection{background:var(--red);color:#fff}
-
-/* film grain */
-body::after{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:9990;opacity:.05;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.7'/></svg>");
-}
-
-.skip{position:fixed;left:16px;top:-60px;background:var(--red);color:#fff;padding:10px 16px;border-radius:8px;z-index:3000;font-weight:700;font-size:13px;transition:top .2s}
-.skip:focus{top:12px}
-
-/* progress + cursor */
-.progress{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--red);transform-origin:0 50%;transform:scaleX(0);z-index:1100}
-.cursor,.cursor-ring{position:fixed;left:0;top:0;pointer-events:none;border-radius:50%;z-index:9999;display:none}
-.cursor{width:7px;height:7px;background:var(--red)}
-.cursor-ring{width:34px;height:34px;border:1px solid rgba(255,255,255,.45);transition:width .25s var(--ease),height .25s var(--ease),border-color .25s}
-.cursor-ring.hover{width:54px;height:54px;border-color:rgba(255,23,23,.85)}
-body.has-cursor .cursor,body.has-cursor .cursor-ring{display:block}
-
-/* NAV */
-.navbar{position:fixed;top:0;left:0;width:100%;height:var(--nav-h);z-index:1000;padding:0 5%;display:flex;justify-content:space-between;align-items:center;
-  background:rgba(5,5,5,.55);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
-  border-bottom:1px solid rgba(255,255,255,.06);transition:background .3s}
-.navbar.scrolled{background:rgba(5,5,5,.85)}
-.logo{font-family:"Space Grotesk",sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px}
-.logo span{color:var(--red)}
-.nav-links{display:flex;align-items:center;gap:34px}
-.nav-links a{color:#aaa;font-size:12px;font-weight:600;letter-spacing:1px;transition:color .3s;position:relative}
-.nav-links a:not(.nav-contact)::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:100%;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
-.nav-links a:hover,.nav-links a.active{color:#fff}
-.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
-.nav-contact{padding:11px 20px;border:1px solid rgba(255,255,255,.2);border-radius:50px;transition:.3s}
-.nav-contact:hover{background:#fff;color:#000!important}
-.menu-btn{display:none;border:0;background:none;font-size:22px;cursor:pointer;padding:8px}
-
-/* HERO */
-.hero{min-height:100vh;padding:150px 5% 90px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;width:760px;height:760px;background:radial-gradient(circle,rgba(255,23,23,.16),transparent 65%);right:-260px;top:-260px;pointer-events:none}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(circle at 30% 50%,#000 10%,transparent 70%);-webkit-mask-image:radial-gradient(circle at 30% 50%,#000 10%,transparent 70%);pointer-events:none}
-.hero>*{position:relative;z-index:2}
-.rec{display:inline-flex;align-items:center;gap:10px;color:var(--red);font-size:12px;font-weight:700;letter-spacing:4px;margin-bottom:26px}
-.rec i{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1.4s infinite}
-@keyframes blink{50%{opacity:.2}}
-.hero h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(60px,11vw,170px);line-height:.84;letter-spacing:-.06em;max-width:1100px}
-.hero h1 span{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.55)}
-.hero-bottom{margin-top:56px;display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
-.hero-desc{max-width:480px;color:#9a9a9a;line-height:1.75;font-size:15px}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:16px 26px;border-radius:50px;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;border:1px solid transparent;transition:transform .3s var(--ease),box-shadow .3s,background .3s,color .3s}
-.btn-red{background:var(--red);color:#fff}
-.btn-red:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(255,23,23,.3)}
-.btn-ghost{border-color:rgba(255,255,255,.22);background:transparent}
-.btn-ghost:hover{background:#fff;color:#000;transform:translateY(-4px)}
-.scroll-hint{position:absolute;left:5%;bottom:28px;font-size:10px;letter-spacing:3px;color:#666;display:flex;align-items:center;gap:12px}
-.scroll-hint::before{content:"";width:40px;height:1px;background:#555}
-
-/* MARQUEE */
-.marquee{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;white-space:nowrap}
-.marquee-track{display:inline-block;animation:marquee 24s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee span{font-family:"Space Grotesk";font-size:30px;font-weight:700;margin-right:50px}
-.marquee span:nth-child(even){color:var(--red)}
-@keyframes marquee{to{transform:translateX(-50%)}}
-
-/* GENERAL */
-.section{padding:130px 5%}
-.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;gap:30px}
-.eyebrow{color:var(--red);font-size:11px;letter-spacing:3px;font-weight:700;margin-bottom:15px}
-.section-title{font-family:"Space Grotesk";font-size:clamp(40px,6vw,80px);line-height:.95;letter-spacing:-.05em}
-.section-text{max-width:400px;color:#7d7d7d;line-height:1.7;font-size:14px}
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
-.reveal.active{opacity:1;transform:none}
-
-/* FILM (featured) */
-.film{background:#080808;border-bottom:1px solid var(--border)}
-.film-stage{display:block;position:relative;width:100%;aspect-ratio:16/8;background:#111;overflow:hidden;border:1px solid var(--border);cursor:pointer;text-align:left}
-.film-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease),filter .5s;filter:brightness(.75)}
-.film-stage:hover img{transform:scale(1.04);filter:brightness(.95)}
-.film-stage::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent 55%);pointer-events:none}
-.film-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:96px;height:96px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:28px;z-index:2;box-shadow:0 0 0 0 rgba(255,23,23,.5);animation:ring 2.2s infinite;transition:transform .3s var(--ease)}
-.film-stage:hover .film-play{transform:translate(-50%,-50%) scale(1.12)}
-@keyframes ring{70%{box-shadow:0 0 0 26px rgba(255,23,23,0)}100%{box-shadow:0 0 0 0 rgba(255,23,23,0)}}
-.film-caption{position:absolute;left:28px;bottom:24px;z-index:2}
-.film-caption small{color:var(--red);font-size:10px;letter-spacing:3px;font-weight:700}
-.film-caption h3{font-family:"Space Grotesk";font-size:clamp(24px,3.4vw,44px);letter-spacing:-.03em;margin-top:6px}
-.no-thumb{background:radial-gradient(circle at 30% 30%,#2a0808,#0a0a0a 70%)}
-
-/* CAPABILITIES */
-.create-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
-.create-card{background:var(--bg);padding:35px 25px;min-height:270px;transition:background .4s,transform .4s var(--ease);position:relative;overflow:hidden}
-.create-card::after{content:"";position:absolute;width:180px;height:180px;background:var(--red);filter:blur(100px);opacity:0;right:-100px;bottom:-100px;transition:opacity .5s}
-.create-card:hover{background:#0e0e0e;transform:translateY(-5px)}
-.create-card:hover::after{opacity:.16}
-.card-number{color:#555;font-size:12px}
-.create-card i{display:block;font-size:27px;margin:76px 0 20px;color:var(--red)}
-.create-card h3{font-size:20px;margin-bottom:10px}
-.create-card p{color:#7d7d7d;font-size:13px;line-height:1.65}
-
-/* WORK GRID */
-.frames-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.frame-card{background:var(--surface);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;position:relative}
-.frame-card:hover{transform:translateY(-8px);border-color:rgba(255,23,23,.55);box-shadow:0 20px 50px rgba(255,23,23,.08)}
-.frame-image{aspect-ratio:16/9;background:#111;position:relative;overflow:hidden}
-.frame-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
-.frame-card:hover .frame-image img{transform:scale(1.07)}
-.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.85);width:64px;height:64px;display:flex;justify-content:center;align-items:center;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.3);opacity:0;transition:.3s var(--ease)}
-.frame-card:hover .play,.frame-card:focus-visible .play{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.tag-new{position:absolute;top:12px;left:12px;background:var(--red);font-size:10px;font-weight:800;letter-spacing:2px;padding:5px 10px;border-radius:50px;z-index:2}
-.frame-info{padding:22px}
-.frame-info small{color:var(--red);font-size:10px;letter-spacing:2px;font-weight:600}
-.frame-info h3{margin-top:8px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.frame-info p{color:#777;font-size:12px;margin-top:12px;letter-spacing:1px}
-.skel .frame-image,.skel .line{background:linear-gradient(90deg,#141414 25%,#202020 50%,#141414 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
-.skel .line{height:12px;margin-bottom:12px;border-radius:4px}
-@keyframes shimmer{to{background-position:-200% 0}}
-.grid-msg{grid-column:1/-1;text-align:center;padding:60px 20px;color:#777;border:1px dashed var(--border)}
-.grid-msg .btn{margin:22px 6px 0}
-.more-wrap{text-align:center;margin-top:44px}
-
-/* SERIES (SEKAI) */
-.featured{background:#090909;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:130px 5%}
-.featured-inner{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
-.featured-image{display:block;aspect-ratio:16/10;overflow:hidden;position:relative;background:#111;border:1px solid var(--border);cursor:pointer;width:100%}
-.featured-image img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
-.featured-image:hover img{transform:scale(1.05)}
-.featured-image .play{opacity:1}
-.featured-content h2{font-family:"Space Grotesk";font-size:clamp(55px,7vw,100px);line-height:.85;letter-spacing:-.06em}
-.featured-content h2 span{color:var(--red)}
-.featured-content p{margin-top:30px;color:#888;line-height:1.75;max-width:500px}
-.featured-link{display:inline-flex;margin-top:34px;gap:10px;align-items:center;font-size:13px;font-weight:700;background:none;border:0;cursor:pointer;letter-spacing:1px}
-.featured-link i{color:var(--red);transition:transform .3s}
-.featured-link:hover i{transform:translate(4px,-4px)}
-
-/* ABOUT + PROCESS */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px}
-.about-big{font-family:"Space Grotesk";font-size:clamp(35px,5vw,65px);line-height:1;letter-spacing:-.05em}
-.about-big span{color:var(--red)}
-.about-copy{color:#888;line-height:1.9;font-size:15px}
-.about-copy p+p{margin-top:24px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
-.chip{padding:9px 16px;border:1px solid var(--border);border-radius:50px;font-size:12px;font-weight:600;color:#ccc;transition:.3s}
-.chip:hover{border-color:var(--red);color:#fff;transform:translateY(-3px)}
-.process{margin-top:110px;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
-.step{background:var(--bg);padding:30px 22px;transition:background .3s}
-.step:hover{background:#0d0d0d}
-.step b{font-family:"Space Grotesk";font-size:34px;color:var(--red);letter-spacing:-.04em}
-.step h4{margin:38px 0 8px;font-size:16px}
-.step p{font-size:12.5px;color:#777;line-height:1.65}
-
-/* CONTACT */
-.contact{padding:130px 5%;border-top:1px solid var(--border);background:#070707}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.contact h2{font-family:"Space Grotesk";font-size:clamp(50px,7.5vw,110px);line-height:.86;letter-spacing:-.06em}
-.contact h2 span{color:var(--red)}
-.contact-left p{color:#7d7d7d;margin:28px 0;max-width:460px;line-height:1.75}
-.mail-link{display:inline-flex;align-items:center;gap:12px;font-family:"Space Grotesk";font-size:clamp(16px,2vw,22px);font-weight:600;border-bottom:1px solid var(--red);padding-bottom:6px;word-break:break-all}
-.mail-link i{color:var(--red)}
-form{background:var(--surface);border:1px solid var(--border);padding:34px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.field{margin-bottom:18px}
-.field label{display:block;font-size:11px;letter-spacing:2px;color:#999;font-weight:600;margin-bottom:8px}
-.field input,.field select,.field textarea{width:100%;background:#0a0a0a;border:1px solid var(--border);color:#fff;padding:14px 15px;border-radius:8px;font:inherit;font-size:14px;transition:border-color .3s,box-shadow .3s}
-.field textarea{resize:vertical;min-height:130px}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(255,23,23,.15)}
-.field [aria-invalid="true"]{border-color:#ff5c5c}
-.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
-.form-note{margin-top:14px;font-size:13px;min-height:20px;color:#9a9a9a}
-.form-note.ok{color:#3ddc84}
-.form-note.bad{color:#ff6b6b}
-
-/* FOOTER */
-footer{padding:60px 5% 30px;border-top:1px solid var(--border)}
-.foot-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:44px}
-.foot-links{display:flex;gap:28px;flex-wrap:wrap}
-.foot-links a{font-size:12px;letter-spacing:1px;color:#888;transition:.3s}
-.foot-links a:hover{color:#fff}
-.socials{display:flex;gap:12px}
-.socials a{width:42px;height:42px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#888;transition:.3s var(--ease)}
-.socials a:hover{color:#fff;background:var(--red);border-color:var(--red);transform:translateY(-4px)}
-.foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12px;color:#666;padding-top:24px;border-top:1px solid var(--border)}
-.foot-bottom a:hover{color:#fff}
-
-/* MODAL */
-.modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:20px}
-.modal.open{display:flex;animation:fade .3s}
-@keyframes fade{from{opacity:0}}
-.modal-inner{width:100%;max-width:1040px}
-.modal-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px}
-.modal-bar h3{font-family:"Space Grotesk";font-size:clamp(14px,2vw,18px);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.modal-actions{display:flex;align-items:center;gap:14px;flex-shrink:0}
-.modal-actions a{font-size:11px;letter-spacing:2px;color:#aaa;font-weight:600}
-.modal-actions a:hover{color:var(--red)}
-.icon-btn{background:none;border:1px solid var(--border);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:16px;transition:.3s}
-.icon-btn:hover:not(:disabled){background:var(--red);border-color:var(--red)}
-.icon-btn:disabled{opacity:.3;cursor:default}
-.modal-frame{aspect-ratio:16/9;background:#000;box-shadow:0 0 80px rgba(255,23,23,.18)}
-.modal-frame iframe{width:100%;height:100%;border:0}
-.modal-nav{display:flex;justify-content:center;gap:14px;margin-top:16px}
-
-/* RESPONSIVE */
-@media(max-width:1000px){
-  .create-grid{grid-template-columns:repeat(2,1fr)}
-  .frames-grid{grid-template-columns:1fr 1fr}
-  .featured-inner,.about-grid,.contact-grid{grid-template-columns:1fr;gap:50px}
-  .process{grid-template-columns:repeat(2,1fr)}
-  .film-stage{aspect-ratio:16/10}
-}
-@media(max-width:900px){
-  .menu-btn{display:block}
-  .nav-links{position:absolute;top:var(--nav-h);left:0;width:100%;background:rgba(8,8,8,.97);border-bottom:1px solid var(--border);display:none;flex-direction:column;align-items:flex-start;gap:22px;padding:26px 6%}
-  .nav-links.active{display:flex}
-  .nav-contact{padding:0;border:0}
-}
-@media(max-width:700px){
-  .hero{padding:120px 6% 90px}
-  .hero h1{font-size:clamp(52px,17vw,100px)}
-  .hero-bottom{flex-direction:column;align-items:flex-start}
-  .section,.featured,.contact{padding:90px 6%}
-  .section-head{flex-direction:column;align-items:flex-start}
-  .create-grid,.frames-grid,.process{grid-template-columns:1fr}
-  .create-card{min-height:auto}
-  .create-card i{margin-top:40px}
-  .film-play{width:70px;height:70px;font-size:20px}
-  .film-caption{left:18px;bottom:16px}
-  .row{grid-template-columns:1fr}
-  form{padding:22px}
-  .play{opacity:1}
-  .scroll-hint{display:none}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-  .reveal{opacity:1;transform:none}
-}
+:root{--bg:#050505;--surface:#0d0d0d;--surface2:#121212;--text:#f4f4f2;--muted:#888;--line:rgba(255,255,255,.11);--accent:#ff1717;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}img{display:block;max-width:100%}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.035;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.progress{position:fixed;z-index:3000;top:0;left:0;width:100%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.nav{height:72px;position:fixed;z-index:2000;top:0;left:0;width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(5,5,5,.58);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06);transition:.35s}
+.nav.scrolled{background:rgba(5,5,5,.92)}
+.logo{font:700 20px "Space Grotesk";letter-spacing:-1px}.logo span{color:var(--accent)}
+.navlinks{display:flex;gap:28px;align-items:center}.navlinks a{font-size:11px;letter-spacing:1.6px;color:#999;transition:.3s}.navlinks a:hover{color:#fff}
+.navcta{border:1px solid var(--line);padding:11px 18px;border-radius:30px!important;color:#fff!important}.navcta:hover{background:#fff;color:#000!important}
+.menu{display:none;background:none;border:0;font-size:22px}
+.hero{min-height:100vh;padding:150px 5% 80px;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:800px;height:800px;right:-330px;top:-250px;background:radial-gradient(circle,rgba(255,23,23,.13),transparent 65%)}
+.hero-inner{width:100%;position:relative;z-index:2}.eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:24px}
+.hero h1{font:700 clamp(64px,11vw,160px)/.82 "Space Grotesk";letter-spacing:-.075em;max-width:1150px}
+.outline{color:transparent;-webkit-text-stroke:1px #777}
+.hero-bottom{margin-top:55px;display:flex;justify-content:space-between;gap:35px;align-items:end}.hero-copy{max-width:520px;color:#929292;line-height:1.75;font-size:15px}
+.buttons{display:flex;gap:12px;flex-wrap:wrap}.btn{border:1px solid transparent;padding:15px 24px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:1.2px;display:inline-flex;align-items:center;gap:10px;transition:.3s var(--ease)}
+.btn.primary{background:var(--accent)}.btn.primary:hover{transform:translateY(-4px);box-shadow:0 15px 40px rgba(255,23,23,.25)}
+.btn.ghost{border-color:var(--line)}.btn.ghost:hover{background:#fff;color:#000;transform:translateY(-4px)}
+.scroll{position:absolute;bottom:25px;left:5%;font-size:10px;letter-spacing:3px;color:#666}
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;overflow:hidden;white-space:nowrap}
+.track{display:inline-block;animation:marq 24s linear infinite}.track span{font:700 28px "Space Grotesk";margin-right:55px}.track span:nth-child(even){color:var(--accent)}
+@keyframes marq{to{transform:translateX(-50%)}}
+section{padding:125px 5%}.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:55px}.title{font:700 clamp(42px,6vw,82px)/.9 "Space Grotesk";letter-spacing:-.06em}.desc{max-width:430px;color:#7f7f7f;line-height:1.75;font-size:14px}
+.statement{background:#090909;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.statement h2{font:700 clamp(42px,7vw,100px)/.92 "Space Grotesk";letter-spacing:-.065em;max-width:1100px}.statement p{margin-top:35px;max-width:680px;color:#888;line-height:1.8}
+.services{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);gap:1px;background:var(--line)}
+.service{background:var(--bg);min-height:285px;padding:30px;position:relative;overflow:hidden;transition:.4s}.service:hover{background:#0d0d0d;transform:translateY(-5px)}
+.service .num{color:#555;font-size:11px}.service i{display:block;color:var(--accent);font-size:27px;margin:70px 0 20px}.service h3{font:600 22px "Space Grotesk";margin-bottom:10px}.service p{font-size:13px;color:#777;line-height:1.65}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:35px}.filter{background:none;border:1px solid var(--line);color:#888;padding:10px 17px;border-radius:30px;font-size:10px;letter-spacing:1.5px}.filter.active,.filter:hover{background:#fff;color:#000;border-color:#fff}
+.workgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}.project{background:var(--surface);border:1px solid var(--line);overflow:hidden;position:relative;cursor:pointer;transition:.4s}.project:hover{transform:translateY(-6px);border-color:rgba(255,23,23,.45)}.project:nth-child(1),.project:nth-child(4){grid-column:span 7}.project:nth-child(2),.project:nth-child(3),.project:nth-child(5),.project:nth-child(6){grid-column:span 5}
+.project-media{aspect-ratio:16/9;background:#111;overflow:hidden;position:relative}.project-media img{width:100%;height:100%;object-fit:cover;transition:.65s var(--ease);filter:brightness(.82)}.project:hover img{transform:scale(1.06);filter:brightness(1)}
+.project-info{padding:20px}.project-info small{color:var(--accent);font-size:9px;letter-spacing:2px}.project-info h3{font:600 20px "Space Grotesk";margin-top:7px}.project-info p{font-size:12px;color:#666;margin-top:7px}.project.hidden{display:none}
+.hoverplay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.18);opacity:0;transition:.3s}.project:hover .hoverplay{opacity:1}.playcircle{width:66px;height:66px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+.editing{background:#090909;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.editing-hero{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.bigwords{font:700 clamp(65px,9vw,130px)/.8 "Space Grotesk";letter-spacing:-.08em}.bigwords span{color:var(--accent)}.editing-copy{color:#888;line-height:1.8;max-width:470px}.editgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:70px}.editcard{background:#0e0e0e;border:1px solid var(--line);overflow:hidden}.editcard img{width:100%;aspect-ratio:16/10;object-fit:cover}.editcard div{padding:18px}.editcard small{color:var(--accent);font-size:9px;letter-spacing:2px}.editcard h3{margin-top:6px;font:600 18px "Space Grotesk"}.editcard p{color:#666;font-size:12px;margin-top:5px}
+.process{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);gap:1px;background:var(--line);margin-top:60px}.step{background:var(--bg);padding:28px 22px;min-height:210px}.step b{font:700 32px "Space Grotesk";color:var(--accent)}.step h4{margin:35px 0 8px}.step p{font-size:12px;color:#777;line-height:1.65}
+.three{background:#050505}.threegrid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.render{border:1px solid var(--line);overflow:hidden;min-height:250px;position:relative}.render.large{grid-row:span 2}.render img{width:100%;height:100%;object-fit:cover;transition:.6s}.render:hover img{transform:scale(1.04)}.render-label{position:absolute;left:18px;bottom:15px;font:600 15px "Space Grotesk";text-shadow:0 2px 15px #000}
+.sekai{background:#070707;border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}.sekai:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,23,23,.12),transparent 35%)}.sekai-inner{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.sekai h2{font:700 clamp(70px,10vw,150px)/.8 "Space Grotesk";letter-spacing:-.08em}.sekai h2 span{color:var(--accent)}.sekai p{color:#888;line-height:1.8;max-width:510px;margin:30px 0}.episode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:55px}.episode{border:1px solid var(--line);background:#0b0b0b;overflow:hidden;cursor:pointer}.episode img{width:100%;aspect-ratio:16/9;object-fit:cover;transition:.5s}.episode div{padding:16px}.episode small{color:var(--accent);font-size:9px;letter-spacing:2px}.episode h3{margin-top:5px;font:600 16px "Space Grotesk"}
+.aboutgrid{display:grid;grid-template-columns:1fr 1fr;gap:100px}.aboutbig{font:700 clamp(42px,6vw,80px)/.92 "Space Grotesk";letter-spacing:-.065em}.aboutbig span{color:var(--accent)}.aboutcopy{color:#888;line-height:1.85}.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:30px}.chip{border:1px solid var(--line);padding:9px 14px;border-radius:30px;font-size:11px;color:#aaa}
+.brands{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#090909}.brandline{display:flex;justify-content:space-between;align-items:end;gap:30px}.brandline h2{font:700 clamp(45px,7vw,95px)/.9 "Space Grotesk";letter-spacing:-.07em}.brandline p{max-width:430px;color:#888;line-height:1.8}
+.contact{background:#070707}.contactgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px}.contact h2{font:700 clamp(55px,8vw,115px)/.84 "Space Grotesk";letter-spacing:-.07em}.contact h2 span{color:var(--accent)}.contact p{color:#888;line-height:1.8;max-width:480px;margin:30px 0}.email{font:600 20px "Space Grotesk";border-bottom:1px solid var(--accent);padding-bottom:6px}
+form{background:#0d0d0d;border:1px solid var(--line);padding:30px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:17px}.field label{display:block;color:#888;font-size:9px;letter-spacing:2px;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;background:#080808;border:1px solid var(--line);padding:13px;border-radius:6px;outline:none}.field textarea{min-height:130px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}footer{padding:55px 5% 25px;border-top:1px solid var(--line)}.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}.footlinks{display:flex;gap:22px;flex-wrap:wrap}.footlinks a{font-size:11px;color:#777}.socials{display:flex;gap:10px}.socials a{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:#777}.socials a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}.copyright{margin-top:35px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:#555;display:flex;justify-content:space-between}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:5000;display:none;place-items:center;padding:20px}.modal.open{display:grid}.modalbox{width:min(1050px,100%)}.modalbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.modalbar h3{font:600 18px "Space Grotesk"}.close{background:none;border:1px solid var(--line);width:40px;height:40px;border-radius:50%}.videobox{aspect-ratio:16/9;background:#000}.videobox iframe{width:100%;height:100%;border:0}
+.reveal{opacity:0;transform:translateY(30px);transition:1s var(--ease)}.reveal.show{opacity:1;transform:none}
+@media(max-width:1000px){.services{grid-template-columns:repeat(2,1fr)}.workgrid .project{grid-column:span 6}.editing-hero,.sekai-inner,.aboutgrid,.contactgrid{grid-template-columns:1fr;gap:45px}.editgrid{grid-template-columns:1fr 1fr}.process{grid-template-columns:repeat(2,1fr)}.threegrid{grid-template-columns:1fr}.render.large{grid-row:auto}.episode-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){.navlinks{position:absolute;top:72px;left:0;width:100%;background:#080808;display:none;flex-direction:column;align-items:flex-start;padding:25px 6%;gap:20px}.navlinks.open{display:flex}.menu{display:block}.hero-bottom,.section-head,.brandline{flex-direction:column;align-items:flex-start}.hero h1{font-size:clamp(58px,16vw,100px)}}
+@media(max-width:650px){section{padding:90px 6%}.services,.workgrid,.editgrid,.process,.episode-grid{grid-template-columns:1fr}.workgrid .project{grid-column:span 1}.row{grid-template-columns:1fr}.copyright{flex-direction:column}.hero{padding:125px 6% 80px}.buttons{width:100%}.btn{width:100%}.section-head{margin-bottom:35px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
 </style>
-<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 </head>
 
-<body id="top">
-<a class="skip" href="#film">Skip to content</a>
+<body>
 <div class="progress" id="progress"></div>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="ring"></div>
 
-<!-- NAV -->
-<header class="navbar" id="navbar">
+<header class="nav" id="nav">
   <a href="#top" class="logo">PHANTOM<span>FRAMES</span></a>
-  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><i class="fa-solid fa-bars"></i></button>
-  <nav class="nav-links" id="navLinks" aria-label="Primary">
-    <a href="#film">FILM</a>
-    <a href="#work">WORK</a>
-    <a href="#create">SERVICES</a>
-    <a href="#about">ABOUT</a>
-    <a href="#contact" class="nav-contact">CONTACT</a>
+  <button class="menu" id="menu" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+  <nav class="navlinks" id="navlinks">
+    <a href="#work">WORK</a><a href="#animation">ANIMATION</a><a href="#editing">EDITING</a><a href="#three">3D</a><a href="#sekai">SEKAI</a><a href="#about">ABOUT</a><a href="#contact" class="navcta">LET'S WORK TOGETHER</a>
   </nav>
 </header>
 
-<!-- HERO -->
+<main id="top">
 <section class="hero">
-  <div class="rec"><i></i> ANIMATION × VFX × 3D × FILMMAKING</div>
-  <h1>MAKE<br>THE<br><span>UNSEEN</span><br>FEEL.</h1>
-  <div class="hero-bottom">
-    <p class="hero-desc">Phantom Frames is an independent creative studio building animated worlds, cinematic visuals, VFX and original stories.</p>
-    <div class="hero-cta">
-      <a href="#film" class="btn btn-red" id="heroPlay"><i class="fa-solid fa-play"></i> WATCH UNSEEN FEELING</a>
-      <a href="#work" class="btn btn-ghost">EXPLORE WORK <i class="fa-solid fa-arrow-down"></i></a>
+  <div class="hero-inner">
+    <div class="eyebrow">PHANTOM FRAMES — CREATIVE STUDIO</div>
+    <h1>I CREATE<br>VISUALS<br>THAT <span class="outline">FEEL ALIVE.</span></h1>
+    <div class="hero-bottom">
+      <p class="hero-copy">Animation. 3D. Editing. Motion. Visual storytelling.<br>Building worlds, shaping stories, and turning ideas into visuals.</p>
+      <div class="buttons"><a class="btn primary" href="#work">VIEW WORK <i class="fa-solid fa-arrow-down"></i></a><a class="btn ghost" href="#contact">START A PROJECT <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
     </div>
   </div>
-  <div class="scroll-hint">SCROLL</div>
+  <div class="scroll">SCROLL TO EXPLORE ↓</div>
 </section>
 
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>ANIMATION</span><span>VFX</span><span>3D WORLDS</span><span>FILMMAKING</span><span>ORIGINAL IP</span>
-    <span>ANIMATION</span><span>VFX</span><span>3D WORLDS</span><span>FILMMAKING</span><span>ORIGINAL IP</span>
-    <span>ANIMATION</span><span>VFX</span><span>3D WORLDS</span><span>FILMMAKING</span><span>ORIGINAL IP</span>
-    <span>ANIMATION</span><span>VFX</span><span>3D WORLDS</span><span>FILMMAKING</span><span>ORIGINAL IP</span>
-  </div>
-</div>
+<div class="marquee" aria-hidden="true"><div class="track">
+  <span>ANIMATION</span><span>3D</span><span>VIDEO EDITING</span><span>MOTION GRAPHICS</span><span>COMMERCIAL</span><span>STORYTELLING</span>
+  <span>ANIMATION</span><span>3D</span><span>VIDEO EDITING</span><span>MOTION GRAPHICS</span><span>COMMERCIAL</span><span>STORYTELLING</span>
+</div></div>
 
-<main>
-<!-- FEATURED FILM -->
-<section class="section film reveal" id="film">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">01 — FEATURED FILM</div>
-      <h2 class="section-title">UNSEEN<br>FEELING.</h2>
-    </div>
-    <p class="section-text">Press play and watch it right here — no need to leave the site.</p>
-  </div>
-  <div id="filmSlot">
-    <div class="film-stage no-thumb" aria-hidden="true"></div>
+<section class="statement reveal">
+  <h2>FROM ANIMATION<br>TO EDITING —<br>EVERY FRAME<br>HAS A PURPOSE.</h2>
+  <p>I work across animation, 3D, motion design and video editing to create visuals that communicate ideas, build worlds and hold attention.</p>
+</section>
+
+<section id="animation" class="reveal">
+  <div class="section-head"><div><div class="eyebrow">01 — WHAT I DO</div><h2 class="title">VISUAL<br>CRAFT.</h2></div><p class="desc">A creative toolkit built around cinematic storytelling — from hand-drawn frames and 3D worlds to fast-paced commercial edits.</p></div>
+  <div class="services">
+    <article class="service"><span class="num">01</span><i class="fa-solid fa-wand-magic-sparkles"></i><h3>2D / 2.5D Animation</h3><p>Character animation, cinematic sequences and story-driven visual development.</p></article>
+    <article class="service"><span class="num">02</span><i class="fa-solid fa-cube"></i><h3>3D Modeling</h3><p>Characters, props, environments, lighting studies and cinematic renders.</p></article>
+    <article class="service"><span class="num">03</span><i class="fa-solid fa-film"></i><h3>Video Editing</h3><p>YouTube, short-form, cinematic, promotional and social media editing.</p></article>
+    <article class="service"><span class="num">04</span><i class="fa-solid fa-bolt"></i><h3>Motion Graphics</h3><p>Animated typography, transitions, visual effects and promotional graphics.</p></article>
+    <article class="service"><span class="num">05</span><i class="fa-solid fa-bullhorn"></i><h3>Commercial Content</h3><p>Product visuals, advertisements, brand content and social campaigns.</p></article>
+    <article class="service"><span class="num">06</span><i class="fa-solid fa-book-open"></i><h3>Storytelling</h3><p>Original concepts, visual narratives and cinematic sequences built from scratch.</p></article>
   </div>
 </section>
 
-<!-- RECENT WORK -->
-<section class="section reveal" id="work">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">02 — RECENT FRAMES</div>
-      <h2 class="section-title">RECENT<br>WORK.</h2>
-    </div>
-    <p class="section-text">Fresh uploads pulled straight from the channel. Click any frame to play it here.</p>
-  </div>
-  <div class="frames-grid" id="videoGrid" aria-live="polite"></div>
-  <div class="more-wrap" id="moreWrap"></div>
+<section id="work" class="reveal">
+  <div class="section-head"><div><div class="eyebrow">02 — SELECTED WORK</div><h2 class="title">RECENT<br>FRAMES.</h2></div><p class="desc">Personal projects, original IP, 3D work and editing pieces. Replace the sample media with your real work as you build the portfolio.</p></div>
+  <div class="filters" id="filters"></div>
+  <div class="workgrid" id="workgrid"></div>
 </section>
 
-<!-- SERIES -->
-<section class="featured reveal" id="series">
-  <div class="featured-inner">
-    <div id="sekaiSlot"><div class="featured-image no-thumb"></div></div>
-    <div class="featured-content">
-      <div class="eyebrow">ORIGINAL SERIES</div>
-      <h2>SE<span>K</span>AI</h2>
-      <p>An original animated universe built around mystery, mythology, cosmic forces and cinematic storytelling.</p>
-      <button class="featured-link" id="sekaiBtn" type="button">WATCH THE SERIES <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-    </div>
+<section id="editing" class="editing reveal">
+  <div class="editing-hero">
+    <div><div class="eyebrow">03 — VIDEO EDITING</div><div class="bigwords">CUT.<br>PACE.<br><span>IMPACT.</span></div></div>
+    <p class="editing-copy">Editing isn't just about cutting footage. It's about controlling attention, rhythm and emotion. This section is built specifically so potential clients can immediately understand that Phantom Frames also handles professional editing.</p>
   </div>
-</section>
+  <div class="editgrid">
+    <article class="editcard"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=80" alt="Cinematic editing"><div><small>CINEMATIC</small><h3>Story / Film Edit</h3><p>Pacing, rhythm, sound and visual storytelling.</p></div></article>
+    <article class="editcard"><img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1000&q=80" alt="Video editing setup"><div><small>YOUTUBE</small><h3>Long-form Edit</h3><p>Structure, retention-focused pacing and polish.</p></div></article>
+    <article class="editcard"><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1000&q=80" alt="Social media editing"><div><small>SHORT-FORM</small><h3>Reels / Shorts</h3><p>Fast hooks, captions, motion and social-first pacing.</p></div></article>
+  </div>
+  <div class="process">
+    <div class="step"><b>01</b><h4>UNDERSTAND</h4><p>Story, audience and objective.</p></div>
+    <div class="step"><b>02</b><h4>STRUCTURE</h4><p>Build the narrative and pacing.</p></div>
+    <div class="step"><b>03</b><h4>EDIT</h4><p>Cut footage and build rhythm.</p></div>
+    <div class="step"><b>04</b><h4>ENHANCE</h4><p>Sound, motion, color and VFX.</p></div>
+    <div class="step"><b>05</b><h4>FINALIZE</h4><p>Polish every frame and deliver.</p></div>
+  </div>
 
-<!-- SERVICES -->
-<section class="section reveal" id="create">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">03 — CAPABILITIES</div>
-      <h2 class="section-title">WHAT WE<br>CREATE.</h2>
-    </div>
-    <p class="section-text">From hand-crafted animation to cinematic 3D environments — visuals designed to feel like worlds, not shots.</p>
+  <div class="section-head" style="margin-top:90px;margin-bottom:35px">
+    <div><div class="eyebrow">LATEST FROM THE EDITING CHANNEL</div><h2 class="title">EDITING<br>WORK.</h2></div>
+    <p class="desc">This section is connected to your dedicated editing YouTube channel and will automatically show its latest uploads.</p>
   </div>
-  <div class="create-grid">
-    <div class="create-card"><span class="card-number">01</span><i class="fa-solid fa-wand-magic-sparkles"></i><h3>Animation</h3><p>2D, 2.5D and cinematic animated storytelling.</p></div>
-    <div class="create-card"><span class="card-number">02</span><i class="fa-solid fa-bolt"></i><h3>VFX</h3><p>Explosions, environments, compositing and cinematic effects.</p></div>
-    <div class="create-card"><span class="card-number">03</span><i class="fa-solid fa-cube"></i><h3>3D Worlds</h3><p>Characters, props, environments and stylized 3D assets.</p></div>
-    <div class="create-card"><span class="card-number">04</span><i class="fa-solid fa-film"></i><h3>Filmmaking</h3><p>Camera language, lighting, editing, sound and direction.</p></div>
-    <div class="create-card"><span class="card-number">05</span><i class="fa-solid fa-star"></i><h3>Original IP</h3><p>Original characters, stories and universes built from the ground up.</p></div>
+  <div class="editgrid" id="editingGrid"></div>
+  <div style="text-align:center;margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a class="btn ghost" href="https://www.youtube.com/channel/UC68K0XGqdgyGVq71tf32LMg" target="_blank" rel="noopener">VIEW EDITING CHANNEL <i class="fa-brands fa-youtube"></i></a>
+    <a class="btn ghost" href="https://www.instagram.com/cinematic_prathamesh_7/" target="_blank" rel="noopener">EDITING INSTAGRAM <i class="fa-brands fa-instagram"></i></a>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="section reveal" id="about" style="background:#070707;border-top:1px solid var(--border)">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">04 — ABOUT PHANTOM FRAMES</div>
-      <h2 class="section-title">BUILT FOR<br>STORIES.</h2>
-    </div>
-  </div>
-  <div class="about-grid">
-    <div class="about-big">Not just<br><span>content.</span><br>Worlds.</div>
-    <div class="about-copy">
-      <p>Phantom Frames is an independent animation and visual storytelling studio focused on original cinematic experiences.</p>
-      <p>The goal is simple — combine animation, VFX, 3D, filmmaking and sound to make fictional worlds feel real.</p>
-      <p>Alongside client work and visual experiments, the studio is building original IP like SEKAI.</p>
-      <div class="chips" aria-label="Toolkit">
-        <span class="chip">Blender</span><span class="chip">Maya</span><span class="chip">Rendering</span><span class="chip">Compositing</span><span class="chip">Sound Design</span><span class="chip">Editing</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="process" aria-label="Production process">
-    <div class="step"><b>01</b><h4>Concept</h4><p>Story, mood and visual direction locked before anything is built.</p></div>
-    <div class="step"><b>02</b><h4>World Building</h4><p>Environments, characters and assets designed in 3D.</p></div>
-    <div class="step"><b>03</b><h4>Animation</h4><p>Motion, camera and lighting brought together shot by shot.</p></div>
-    <div class="step"><b>04</b><h4>VFX &amp; Comp</h4><p>Effects, rendering and compositing for the final cinematic look.</p></div>
-    <div class="step"><b>05</b><h4>Sound &amp; Release</h4><p>Sound, final edit and delivery to your audience.</p></div>
+<section id="three" class="three reveal">
+  <div class="section-head"><div><div class="eyebrow">04 — 3D WORLDS</div><h2 class="title">BUILD<br>WORLDS.</h2></div><p class="desc">Characters. Environments. Props. Lighting. Cinematic renders. Use this area for your strongest 3D portfolio pieces.</p></div>
+  <div class="threegrid">
+    <div class="render large"><img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1400&q=85" alt="3D cinematic world"><span class="render-label">Cinematic Environment</span></div>
+    <div class="render"><img src="https://images.unsplash.com/photo-1633412802994-5c058f151b66?auto=format&fit=crop&w=1000&q=85" alt="3D asset"><span class="render-label">Asset / Prop</span></div>
+    <div class="render"><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1000&q=85" alt="3D abstract render"><span class="render-label">Lighting Study</span></div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact reveal" id="contact">
-  <div class="contact-grid">
-    <div class="contact-left">
-      <div class="eyebrow">05 — CONTACT</div>
-      <h2>HAVE A<br><span>PROJECT?</span></h2>
-      <p>Animation, VFX, 3D, editing or cinematic content — tell me what you have in mind and let's build something worth watching.</p>
-      <a class="mail-link" id="mailLink" href="#"><i class="fa-solid fa-envelope"></i><span id="mailText"></span></a>
-    </div>
+<section id="sekai" class="sekai reveal">
+  <div class="sekai-inner">
+    <div><div class="eyebrow">05 — ORIGINAL IP</div><h2>SE<span>K</span>AI</h2><p>An original Indian animated universe exploring mythology, mystery, cosmic forces and human stories.</p><a class="btn primary" id="sekaiWatch" href="#">ENTER THE WORLD OF SEKAI <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+    <div class="render"><img id="sekaiThumb" src="https://i.ytimg.com/vi/4KrVnXvK6N8/maxresdefault.jpg" alt="SEKAI animated series"><span class="render-label">An Original Animated Universe</span></div>
+  </div>
+  <div class="episode-grid" id="episodeGrid">
+    <article class="episode"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 01"><div><small>EPISODE 01</small><h3>DEPARTURE</h3></div></article>
+    <article class="episode"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 02"><div><small>EPISODE 02</small><h3>THE JOURNEY</h3></div></article>
+    <article class="episode"><img src="https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg" alt="SEKAI Episode 03"><div><small>EPISODE 03</small><h3>THE AWAKENING</h3></div></article>
+  </div>
+</section>
 
-    <form id="contactForm" novalidate>
-      <div class="row">
-        <div class="field"><label for="cName">NAME</label><input id="cName" name="name" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="cEmail">EMAIL</label><input id="cEmail" name="email" type="email" autocomplete="email" required></div>
-      </div>
-      <div class="field">
-        <label for="cType">PROJECT TYPE</label>
-        <select id="cType" name="type">
-          <option>Animation</option><option>VFX</option><option>3D / Environment</option><option>Editing / Filmmaking</option><option>Collaboration</option><option>Other</option>
-        </select>
-      </div>
-      <div class="field"><label for="cMsg">MESSAGE</label><textarea id="cMsg" name="message" required></textarea></div>
-      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="btn btn-red" type="submit">SEND MESSAGE <i class="fa-solid fa-paper-plane"></i></button>
-      <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+<section id="about" class="reveal">
+  <div class="section-head"><div><div class="eyebrow">06 — ABOUT</div><h2 class="title">BEHIND<br>THE FRAMES.</h2></div></div>
+  <div class="aboutgrid">
+    <div class="aboutbig">Not just<br><span>content.</span><br>Worlds.</div>
+    <div class="aboutcopy"><p>I'm a visual artist focused on animation, 3D and video editing. I enjoy building cinematic visuals, experimenting with storytelling and turning ideas into finished experiences.</p><div class="chips"><span class="chip">Maya</span><span class="chip">ZBrush</span><span class="chip">Substance Painter</span><span class="chip">Clip Studio Paint</span><span class="chip">After Effects</span><span class="chip">Premiere Pro</span><span class="chip">Unreal Engine</span></div></div>
+  </div>
+</section>
+
+<section class="brands reveal">
+  <div class="brandline"><h2>BUILT FOR<br>BRANDS TOO.</h2><p>From social content to product visuals and promotional edits, Phantom Frames can turn a brand idea into cinematic visual content designed to communicate clearly and hold attention.</p></div>
+  <div class="chips" style="margin-top:45px"><span class="chip">Product Videos</span><span class="chip">Social Media</span><span class="chip">Brand Content</span><span class="chip">Promotional Videos</span><span class="chip">Motion Graphics</span></div>
+</section>
+
+<section id="contact" class="contact reveal">
+  <div class="contactgrid">
+    <div><div class="eyebrow">07 — CONTACT</div><h2>HAVE A<br><span>PROJECT?</span></h2><p>Let's turn the idea into something people remember.</p><a class="email" href="mailto:phantomframesxtras@gmail.com">phantomframesxtras@gmail.com</a></div>
+    <form id="contactForm">
+      <div class="row"><div class="field"><label>NAME</label><input name="name" required></div><div class="field"><label>EMAIL</label><input name="email" type="email" required></div></div>
+      <div class="field"><label>PROJECT TYPE</label><select name="type"><option>Animation</option><option>3D</option><option>Video Editing</option><option>Motion Graphics</option><option>Commercial</option><option>Other</option></select></div>
+      <div class="field"><label>BUDGET RANGE</label><select name="budget"><option>Not sure yet</option><option>Under ₹10,000</option><option>₹10,000 – ₹25,000</option><option>₹25,000 – ₹50,000</option><option>₹50,000+</option></select></div>
+      <div class="field"><label>PROJECT DESCRIPTION</label><textarea name="message" required></textarea></div>
+      <button class="btn primary" type="submit">SEND PROJECT INQUIRY <i class="fa-solid fa-paper-plane"></i></button>
+      <p id="formMsg" style="margin-top:12px;color:#777;font-size:12px"></p>
     </form>
   </div>
 </section>
 </main>
 
-<!-- FOOTER -->
 <footer>
-  <div class="foot-top">
-    <a href="#top" class="logo">PHANTOM<span>FRAMES</span></a>
-    <nav class="foot-links" aria-label="Footer">
-      <a href="#film">FILM</a><a href="#work">WORK</a><a href="#create">SERVICES</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
-    </nav>
-    <div class="socials">
-      <a id="sYt" href="#" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-      <a id="sIg" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a id="sX" href="#" target="_blank" rel="noopener" aria-label="X" hidden><i class="fa-brands fa-x-twitter"></i></a>
-    </div>
-  </div>
-  <div class="foot-bottom">
-    <span>© <span id="year"></span> Phantom Frames. All rights reserved.</span>
-    <a href="#top">BACK TO TOP ↑</a>
-  </div>
+  <div class="foot"><a href="#top" class="logo">PHANTOM<span>FRAMES</span></a><nav class="footlinks"><a href="#work">WORK</a><a href="#animation">ANIMATION</a><a href="#three">3D</a><a href="#editing">EDITING</a><a href="#sekai">SEKAI</a><a href="#contact">CONTACT</a></nav><div class="socials"><a href="https://www.instagram.com/phantom.frames7/" target="_blank" rel="noopener" title="Phantom Frames — Animation"><i class="fa-brands fa-instagram"></i></a><a href="https://www.instagram.com/cinematic_prathamesh_7/" target="_blank" rel="noopener" title="Cinematic Prathamesh — Editing"><i class="fa-brands fa-camera-retro"></i></a><a href="https://www.youtube.com/channel/UC8unk2knnUultPA_hkE3Xtg" target="_blank" rel="noopener" title="SEKAI — YouTube"><i class="fa-brands fa-youtube"></i></a><a href="https://www.youtube.com/channel/UC68K0XGqdgyGVq71tf32LMg" target="_blank" rel="noopener" title="Editing Channel — YouTube"><i class="fa-solid fa-scissors"></i></a></div></div>
+  <div class="copyright"><span>© 2026 Phantom Frames. All rights reserved.</span><span>Built frame by frame.</span></div>
 </footer>
 
-<!-- VIDEO MODAL -->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Video player" aria-hidden="true">
-  <div class="modal-inner">
-    <div class="modal-bar">
-      <h3 id="mTitle">Now playing</h3>
-      <div class="modal-actions">
-        <a id="mYt" href="#" target="_blank" rel="noopener">OPEN ON YOUTUBE</a>
-        <button class="icon-btn" id="mClose" type="button" aria-label="Close video"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-    </div>
-    <div class="modal-frame">
-      <iframe id="mFrame" title="YouTube video player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    </div>
-    <div class="modal-nav">
-      <button class="icon-btn" id="mPrev" type="button" aria-label="Previous video"><i class="fa-solid fa-chevron-left"></i></button>
-      <button class="icon-btn" id="mNext" type="button" aria-label="Next video"><i class="fa-solid fa-chevron-right"></i></button>
-    </div>
-  </div>
-</div>
+<div class="modal" id="modal"><div class="modalbox"><div class="modalbar"><h3 id="modalTitle">Now playing</h3><button class="close" id="close"><i class="fa-solid fa-xmark"></i></button></div><div class="videobox"><iframe id="video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div></div>
 
 <script>
-/* ==========================================
-   CONFIG — EDIT THESE
-========================================== */
-const CONFIG = {
-  channelId: "UC8unk2knnUultPA_hkE3Xtg",
-  handle: "@PhantomFrames-l7x",
-  email: "phantomframesxtras@gmail.com",
-  instagram: "https://www.instagram.com/",
-  twitter: "",                    // add your X/Twitter URL to show the icon
-  formEndpoint: "",               // optional: Formspree URL (https://formspree.io/f/xxxx). Empty = opens email app
-  unseenFeelingId: "",            // optional: paste the video ID (the part after ?v=). Empty = auto-detect by title
-  sekaiVideoId: "4KrVnXvK6N8",    // video used for the SEKAI block
-  initialVideos: 6
+const CONFIG={
+ channelId:"UC8unk2knnUultPA_hkE3Xtg",
+ editingChannelId:"UC68K0XGqdgyGVq71tf32LMg",
+ instagram:"https://www.instagram.com/phantom.frames7/",
+ instagramEditing:"https://www.instagram.com/cinematic_prathamesh_7/",
+ email:"phantomframesxtras@gmail.com",
+ sekaiVideoId:"4KrVnXvK6N8"
 };
 
-const RSS_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=" + CONFIG.channelId;
-const RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(RSS_URL);
-const CHANNEL_URL = "https://www.youtube.com/channel/" + CONFIG.channelId;
-const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const projects=[
+ {title:"SEKAI — Episode 01",cat:"ANIMATION",year:"2026",desc:"Original animated series / Departure",img:"https://i.ytimg.com/vi/4KrVnXvK6N8/maxresdefault.jpg",video:CONFIG.sekaiVideoId},
+ {title:"SEKAI — Episode 02",cat:"ANIMATION",year:"2026",desc:"Original series / Episode 02",img:"https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg",video:CONFIG.sekaiVideoId},
+ {title:"SEKAI — Episode 03",cat:"ANIMATION",year:"2026",desc:"Original series / Cinematic",img:"https://i.ytimg.com/vi/4KrVnXvK6N8/hqdefault.jpg",video:CONFIG.sekaiVideoId},
+ {title:"Cinematic 3D Environment",cat:"3D",year:"2026",desc:"Environment / Lighting / Render",img:"https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=85"},
+ {title:"Product Commercial",cat:"COMMERCIAL",year:"2026",desc:"Brand / Product / 30 sec",img:"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85"},
+ {title:"Short-form Social Edit",cat:"EDITING",year:"2026",desc:"Reels / Shorts / Motion",img:"https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=85"}
+];
 
-const state = { videos: [], shown: 0 };
+const filters=["ALL","ANIMATION","3D","EDITING","MOTION","COMMERCIAL","PERSONAL"];
+const filtersEl=document.getElementById("filters"),grid=document.getElementById("workgrid");
 
-/* ---------- Static links ---------- */
-$("#year").textContent = new Date().getFullYear();
-$("#sYt").href = CHANNEL_URL;
-$("#sIg").href = CONFIG.instagram;
-if (CONFIG.twitter) { $("#sX").href = CONFIG.twitter; $("#sX").hidden = false; }
-$("#mailLink").href = "mailto:" + CONFIG.email;
-$("#mailText").textContent = CONFIG.email;
+const EDITING_CHANNEL_ID = CONFIG.editingChannelId;
+const EDITING_RSS = "https://www.youtube.com/feeds/videos.xml?channel_id=" + EDITING_CHANNEL_ID;
+const EDITING_RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(EDITING_RSS);
 
-/* ---------- Helpers ---------- */
-function parseId(guid) { return String(guid || "").split(":").pop(); }   // "yt:video:ID" -> ID
-function fmtDate(s) {
-  const d = new Date(String(s).replace(" ", "T") + "Z");
-  return isNaN(d) ? "" : d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
-}
-function isRecent(s, days = 14) {
-  const d = new Date(String(s).replace(" ", "T") + "Z");
-  return !isNaN(d) && (Date.now() - d) < days * 864e5;
-}
-function setThumb(img, id, onFail) {
-  let tried = false;
-  const hq = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-  const fallback = () => { if (tried) { onFail && onFail(); return; } tried = true; img.src = hq; };
-  img.onerror = fallback;
-  img.onload = () => { if (!tried && img.naturalWidth < 400) fallback(); };  // maxres missing => tiny placeholder
-  img.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-}
-function el(tag, cls, html) {
-  const n = document.createElement(tag);
-  if (cls) n.className = cls;
-  if (html) n.innerHTML = html;
-  return n;
+const SEKAI_CHANNEL_ID = CONFIG.channelId;
+const SEKAI_RSS = "https://www.youtube.com/feeds/videos.xml?channel_id=" + SEKAI_CHANNEL_ID;
+const SEKAI_RSS_API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(SEKAI_RSS);
+
+function editingVideoId(guid){
+  return String(guid || "").split(":").pop();
 }
 
-/* ---------- Feed (cached 10 min to avoid API rate limits) ---------- */
-async function getFeed() {
-  const KEY = "pf_feed_v2";
-  try {
-    const c = JSON.parse(sessionStorage.getItem(KEY) || "null");
-    if (c && Date.now() - c.t < 600000) return c.items;
-  } catch (e) {}
-  const res = await fetch(RSS_API);
-  if (!res.ok) throw new Error("HTTP " + res.status);
-  const data = await res.json();
-  if (data.status !== "ok" || !data.items || !data.items.length) throw new Error("Empty feed");
-  const items = data.items.map(i => ({ id: parseId(i.guid), title: i.title, date: i.pubDate }));
-  try { sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), items })); } catch (e) {}
-  return items;
-}
+async function loadEditingChannel(){
+  const target = document.getElementById("editingGrid");
+  if(!target) return;
 
-/* ---------- Grid ---------- */
-const grid = $("#videoGrid"), moreWrap = $("#moreWrap");
+  target.innerHTML = `
+    <article class="editcard"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>
+    <article class="editcard"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>
+    <article class="editcard"><div style="aspect-ratio:16/10;background:#111"></div><div><small>LOADING</small><h3>Latest editing work…</h3></div></article>`;
 
-function showSkeletons() {
-  grid.innerHTML = "";
-  for (let i = 0; i < 3; i++) {
-    grid.appendChild(el("div", "frame-card skel",
-      `<div class="frame-image"></div><div class="frame-info"><div class="line" style="width:40%"></div><div class="line" style="width:90%"></div></div>`));
-  }
-  moreWrap.innerHTML = "";
-}
+  try{
+    const cacheKey="phantom_editing_feed_v1";
+    let items=null;
+    try{
+      const cached=JSON.parse(sessionStorage.getItem(cacheKey)||"null");
+      if(cached && Date.now()-cached.t < 600000) items=cached.items;
+    }catch(e){}
 
-function makeCard(v, isFirst) {
-  const c = el("div", "frame-card");
-  c.tabIndex = 0;
-  c.setAttribute("role", "button");
-  c.setAttribute("aria-label", "Play " + v.title);
-  c.innerHTML = `<div class="frame-image"><img alt="" loading="lazy" decoding="async">
-      <div class="play"><i class="fa-solid fa-play"></i></div></div>
-    <div class="frame-info"><small></small><h3></h3><p>PLAY NOW →</p></div>`;
-  $("small", c).textContent = fmtDate(v.date);
-  $("h3", c).textContent = v.title;                 // textContent = safe from HTML injection
-  const img = $("img", c);
-  setThumb(img, v.id, () => img.parentElement.classList.add("no-thumb"));
-  if (isFirst && isRecent(v.date)) $(".frame-image", c).appendChild(el("span", "tag-new", "NEW"));
-  const open = () => openVideo(v.id);
-  c.addEventListener("click", open);
-  c.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
-  return c;
-}
+    if(!items){
+      const res=await fetch(EDITING_RSS_API);
+      if(!res.ok) throw new Error("Editing feed HTTP "+res.status);
+      const data=await res.json();
+      if(data.status!=="ok" || !data.items?.length) throw new Error("Empty editing feed");
 
-function renderMore() {
-  const next = Math.min(state.shown + (state.shown === 0 ? CONFIG.initialVideos : 3), state.videos.length);
-  for (let i = state.shown; i < next; i++) grid.appendChild(makeCard(state.videos[i], i === 0));
-  state.shown = next;
-  moreWrap.innerHTML = "";
-  if (state.shown < state.videos.length) {
-    const b = el("button", "btn btn-ghost", `LOAD MORE <i class="fa-solid fa-plus"></i>`);
-    b.type = "button";
-    b.addEventListener("click", renderMore);
-    moreWrap.appendChild(b);
-  } else {
-    const a = el("a", "btn btn-ghost", `SEE EVERYTHING ON YOUTUBE <i class="fa-brands fa-youtube"></i>`);
-    a.href = CHANNEL_URL; a.target = "_blank"; a.rel = "noopener";
-    moreWrap.appendChild(a);
-  }
-}
+      items=data.items.slice(0,6).map(v=>({
+        id:editingVideoId(v.guid),
+        title:v.title,
+        date:v.pubDate,
+        description:v.description || ""
+      }));
 
-function showError() {
-  grid.innerHTML = "";
-  const box = el("div", "grid-msg", `<p>Latest videos couldn't be loaded right now.</p>`);
-  const retry = el("button", "btn btn-red", `TRY AGAIN`);
-  retry.type = "button";
-  retry.addEventListener("click", init);
-  const yt = el("a", "btn btn-ghost", `WATCH ON YOUTUBE`);
-  yt.href = CHANNEL_URL; yt.target = "_blank"; yt.rel = "noopener";
-  box.append(retry, yt);
-  grid.appendChild(box);
-  moreWrap.innerHTML = "";
-}
-
-/* ---------- Featured: Unseen Feeling + SEKAI ---------- */
-function findByTitle(re) { return state.videos.find(v => re.test(v.title)); }
-
-function renderFilm() {
-  const slot = $("#filmSlot");
-  const match = findByTitle(/unseen\s*feel/i);
-  const id = CONFIG.unseenFeelingId || (match && match.id);
-  const title = (match && match.title) || "Unseen Feeling";
-  slot.innerHTML = "";
-
-  if (id) {
-    const b = el("button", "film-stage", `<img alt="" decoding="async">
-      <span class="film-play"><i class="fa-solid fa-play"></i></span>
-      <span class="film-caption"><small>FEATURED FILM</small><h3></h3></span>`);
-    b.type = "button";
-    b.setAttribute("aria-label", "Play " + title);
-    $("h3", b).textContent = title;
-    const img = $("img", b);
-    setThumb(img, id, () => { b.classList.add("no-thumb"); img.remove(); });
-    b.addEventListener("click", () => openVideo(id, title));
-    slot.appendChild(b);
-    filmId = id;
-  } else {
-    // fallback: link to a channel search for the video
-    const a = el("a", "film-stage no-thumb", `<span class="film-play"><i class="fa-solid fa-play"></i></span>
-      <span class="film-caption"><small>FEATURED FILM</small><h3>Unseen Feeling</h3></span>`);
-    a.href = CHANNEL_URL + "/search?query=unseen+feeling";
-    a.target = "_blank"; a.rel = "noopener";
-    slot.appendChild(a);
-  }
-}
-let filmId = null;
-
-function renderSekai() {
-  const slot = $("#sekaiSlot");
-  const match = findByTitle(/sekai/i);
-  const id = CONFIG.sekaiVideoId || (match && match.id);
-  slot.innerHTML = "";
-  const btn = $("#sekaiBtn");
-
-  if (id) {
-    const b = el("button", "featured-image", `<img alt="SEKAI" decoding="async"><div class="play"><i class="fa-solid fa-play"></i></div>`);
-    b.type = "button";
-    b.setAttribute("aria-label", "Play SEKAI");
-    const img = $("img", b);
-    setThumb(img, id, () => { b.classList.add("no-thumb"); img.remove(); });
-    b.addEventListener("click", () => openVideo(id, "SEKAI"));
-    slot.appendChild(b);
-    btn.onclick = () => openVideo(id, "SEKAI");
-  } else {
-    const a = el("a", "featured-image no-thumb");
-    a.href = CHANNEL_URL; a.target = "_blank"; a.rel = "noopener";
-    slot.appendChild(a);
-    btn.onclick = () => window.open(CHANNEL_URL, "_blank", "noopener");
-  }
-}
-
-$("#heroPlay").addEventListener("click", e => {
-  if (filmId) { e.preventDefault(); openVideo(filmId, "Unseen Feeling"); }   // else: normal scroll to #film
-});
-
-/* ---------- Video modal (with prev/next) ---------- */
-const modal = $("#modal"), frame = $("#mFrame");
-let list = [], idx = -1, lastFocus = null;
-
-function openVideo(id, fallbackTitle) {
-  const inFeed = state.videos.findIndex(v => v.id === id);
-  if (inFeed > -1) { list = state.videos; idx = inFeed; }
-  else { list = [{ id, title: fallbackTitle || "Now playing" }]; idx = 0; }
-  lastFocus = document.activeElement;
-  loadCurrent();
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-  $("#mClose").focus();
-}
-function loadCurrent() {
-  const v = list[idx];
-  frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(v.id) + "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
-  $("#mTitle").textContent = v.title;
-  $("#mYt").href = "https://www.youtube.com/watch?v=" + encodeURIComponent(v.id);
-  $("#mPrev").disabled = idx <= 0;
-  $("#mNext").disabled = idx >= list.length - 1;
-}
-function closeVideo() {
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
-  frame.src = "";                                   // stops playback
-  document.body.style.overflow = "";
-  if (lastFocus) lastFocus.focus();
-}
-$("#mClose").addEventListener("click", closeVideo);
-$("#mPrev").addEventListener("click", () => { if (idx > 0) { idx--; loadCurrent(); } });
-$("#mNext").addEventListener("click", () => { if (idx < list.length - 1) { idx++; loadCurrent(); } });
-modal.addEventListener("click", e => { if (e.target === modal) closeVideo(); });
-document.addEventListener("keydown", e => {
-  if (!modal.classList.contains("open")) return;
-  if (e.key === "Escape") closeVideo();
-  if (e.key === "ArrowLeft" && idx > 0) { idx--; loadCurrent(); }
-  if (e.key === "ArrowRight" && idx < list.length - 1) { idx++; loadCurrent(); }
-  if (e.key === "Tab") {                            // simple focus trap
-    const f = $$("button:not(:disabled), a[href]", modal);
-    if (!f.length) return;
-    const first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  }
-});
-
-/* ---------- Init ---------- */
-async function init() {
-  showSkeletons();
-  try {
-    state.videos = await getFeed();
-    state.shown = 0;
-    grid.innerHTML = "";
-    renderMore();
-  } catch (err) {
-    console.error("YouTube feed error:", err);
-    state.videos = [];
-    showError();
-  }
-  renderFilm();
-  renderSekai();
-}
-init();
-
-/* ---------- Mobile menu ---------- */
-const menuBtn = $("#menuBtn"), navLinks = $("#navLinks");
-function setMenu(open) {
-  navLinks.classList.toggle("active", open);
-  menuBtn.setAttribute("aria-expanded", open);
-  menuBtn.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
-}
-menuBtn.addEventListener("click", () => setMenu(!navLinks.classList.contains("active")));
-$$("#navLinks a").forEach(a => a.addEventListener("click", () => setMenu(false)));
-document.addEventListener("click", e => { if (!e.target.closest("#navbar")) setMenu(false); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
-
-/* ---------- Scroll: progress, navbar, scrollspy ---------- */
-const bar = $("#progress"), navbar = $("#navbar");
-let ticking = false;
-addEventListener("scroll", () => {
-  if (ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => {
-    const h = document.documentElement.scrollHeight - innerHeight;
-    bar.style.transform = `scaleX(${h > 0 ? scrollY / h : 0})`;
-    navbar.classList.toggle("scrolled", scrollY > 40);
-    ticking = false;
-  });
-}, { passive: true });
-
-if ("IntersectionObserver" in window) {
-  const links = $$("#navLinks a");
-  const spy = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (en.isIntersecting) links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
-    });
-  }, { rootMargin: "-45% 0px -50% 0px" });
-  ["film", "work", "create", "about", "contact"].forEach(id => spy.observe($("#" + id)));
-
-  const rev = new IntersectionObserver(entries => {
-    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("active"); rev.unobserve(en.target); } });
-  }, { threshold: .1 });
-  $$(".reveal").forEach(n => rev.observe(n));
-} else {
-  $$(".reveal").forEach(n => n.classList.add("active"));
-}
-
-/* ---------- Custom cursor (desktop only) ---------- */
-if (matchMedia("(hover:hover) and (pointer:fine)").matches) {
-  document.body.classList.add("has-cursor");
-  const dot = $("#cursor"), ring = $("#ring");
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  addEventListener("mousemove", e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-  });
-  (function loop() {
-    rx += (mx - rx) * .18; ry += (my - ry) * .18;
-    ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-    requestAnimationFrame(loop);
-  })();
-  document.addEventListener("mouseover", e => ring.classList.toggle("hover", !!e.target.closest("a,button,[role=button]")));
-}
-
-/* ---------- Contact form ---------- */
-const form = $("#contactForm"), note = $("#formNote");
-function say(msg, cls) { note.textContent = msg; note.className = "form-note " + (cls || ""); }
-form.addEventListener("submit", async e => {
-  e.preventDefault();
-  if (form.website.value) return;                                   // honeypot: bots only
-  const name = form.name.value.trim(), email = form.email.value.trim(), msg = form.message.value.trim(), type = form.type.value;
-  const bad = {
-    name: name.length < 2,
-    email: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
-    message: msg.length < 10
-  };
-  Object.keys(bad).forEach(k => form[k].setAttribute("aria-invalid", bad[k]));
-  if (Object.values(bad).some(Boolean)) { say("Please fill in your name, a valid email and a message (10+ characters).", "bad"); return; }
-
-  try {
-    if (CONFIG.formEndpoint) {
-      const r = await fetch(CONFIG.formEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({ name, email, type, message: msg })
-      });
-      if (!r.ok) throw new Error("Submit failed");
-      say("Thanks! Your message has been sent.", "ok");
-      form.reset();
-    } else {
-      const body = encodeURIComponent(msg + "\n\n— " + name + " (" + email + ")");
-      location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("[Phantom Frames] " + type)}&body=${body}`;
-      say("Opening your email app…", "ok");
+      try{
+        sessionStorage.setItem(cacheKey,JSON.stringify({t:Date.now(),items}));
+      }catch(e){}
     }
-  } catch (err) {
-    say("Something went wrong. Please email me directly at " + CONFIG.email, "bad");
+
+    target.innerHTML="";
+
+    items.forEach(v=>{
+      const card=document.createElement("article");
+      card.className="editcard";
+      card.style.cursor="pointer";
+      card.innerHTML=`
+        <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:#111">
+          <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg"
+               alt="${v.title.replace(/"/g,"&quot;")}"
+               loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;transition:.5s">
+          <div style="position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.15)">
+            <span class="playcircle"><i class="fa-solid fa-play"></i></span>
+          </div>
+        </div>
+        <div>
+          <small>EDITING • ${new Date(v.date).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}</small>
+          <h3></h3>
+          <p>WATCH PROJECT →</p>
+        </div>`;
+
+      card.querySelector("h3").textContent=v.title;
+      card.addEventListener("mouseenter",()=>card.querySelector("img").style.transform="scale(1.06)");
+      card.addEventListener("mouseleave",()=>card.querySelector("img").style.transform="scale(1)");
+      card.addEventListener("click",()=>openVideo(v.id,v.title));
+      target.appendChild(card);
+    });
+
+  }catch(err){
+    console.error("Editing YouTube feed error:",err);
+    target.innerHTML=`
+      <article class="editcard" style="grid-column:1/-1">
+        <div style="padding:35px;text-align:center">
+          <small>EDITING CHANNEL</small>
+          <h3>Latest editing videos couldn't be loaded.</h3>
+          <p>Open the editing channel directly to see the latest work.</p>
+        </div>
+      </article>`;
   }
+}
+
+async function loadSekaiChannel(){
+  const target = document.getElementById("episodeGrid");
+  if(!target) return;
+
+  try{
+    const cacheKey="phantom_sekai_feed_v1";
+    let items=null;
+    try{
+      const cached=JSON.parse(sessionStorage.getItem(cacheKey)||"null");
+      if(cached && Date.now()-cached.t < 600000) items=cached.items;
+    }catch(e){}
+
+    if(!items){
+      const res=await fetch(SEKAI_RSS_API);
+      if(!res.ok) throw new Error("SEKAI feed HTTP "+res.status);
+      const data=await res.json();
+      if(data.status!=="ok" || !data.items?.length) throw new Error("Empty SEKAI feed");
+
+      items=data.items.slice(0,6).map(v=>({
+        id:editingVideoId(v.guid),
+        title:v.title,
+        date:v.pubDate
+      }));
+
+      try{
+        sessionStorage.setItem(cacheKey,JSON.stringify({t:Date.now(),items}));
+      }catch(e){}
+    }
+
+    if(!items.length) throw new Error("No SEKAI videos");
+
+    // update the big "Enter the World of SEKAI" thumb + button to the latest upload
+    const latest = items[0];
+    const thumb = document.getElementById("sekaiThumb");
+    const watchBtn = document.getElementById("sekaiWatch");
+    if(thumb) thumb.src = `https://i.ytimg.com/vi/${latest.id}/maxresdefault.jpg`;
+    if(watchBtn) watchBtn.onclick = e => { e.preventDefault(); openVideo(latest.id, latest.title); };
+
+    target.innerHTML="";
+    items.slice(0,6).forEach((v,i)=>{
+      const card=document.createElement("article");
+      card.className="episode";
+      card.innerHTML=`
+        <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="${v.title.replace(/"/g,"&quot;")}" loading="lazy">
+        <div><small>EPISODE ${String(i+1).padStart(2,"0")}</small><h3></h3></div>`;
+      card.querySelector("h3").textContent=v.title;
+      card.addEventListener("mouseenter",()=>card.querySelector("img").style.transform="scale(1.06)");
+      card.addEventListener("mouseleave",()=>card.querySelector("img").style.transform="scale(1)");
+      card.addEventListener("click",()=>openVideo(v.id,v.title));
+      target.appendChild(card);
+    });
+
+  }catch(err){
+    console.error("SEKAI YouTube feed error:",err);
+    // leave the static fallback episodes already in the HTML as-is,
+    // but make them clickable to the single known video as a safe fallback.
+    target.querySelectorAll(".episode").forEach(card=>{
+      card.addEventListener("click",()=>openVideo(CONFIG.sekaiVideoId,"SEKAI"));
+    });
+  }
+}
+
+filters.forEach((f,i)=>{const b=document.createElement("button");b.className="filter"+(i===0?" active":"");b.textContent=f;b.onclick=()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProjects(f)};filtersEl.appendChild(b)});
+
+function renderProjects(filter="ALL"){
+ grid.innerHTML="";
+ const list=projects.filter(p=>filter==="ALL"||p.cat===filter);
+ list.forEach(p=>{
+  const el=document.createElement("article");el.className="project reveal show";
+  el.innerHTML=`<div class="project-media"><img src="${p.img}" alt="${p.title}" loading="lazy"><div class="hoverplay"><span class="playcircle"><i class="fa-solid fa-play"></i></span></div></div><div class="project-info"><small>${p.cat} • ${p.year}</small><h3>${p.title}</h3><p>${p.desc}</p></div>`;
+  el.onclick=()=>p.video?openVideo(p.video,p.title):null;
+  grid.appendChild(el);
+ });
+}
+renderProjects();
+loadEditingChannel();
+loadSekaiChannel();
+
+function openVideo(id,title="Now playing"){
+ document.getElementById("modalTitle").textContent=title;
+ document.getElementById("video").src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+ document.getElementById("modal").classList.add("open");
+ document.body.style.overflow="hidden";
+}
+function closeVideo(){document.getElementById("modal").classList.remove("open");document.getElementById("video").src="";document.body.style.overflow=""}
+document.getElementById("close").onclick=closeVideo;
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeVideo()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeVideo()});
+
+const nav=document.getElementById("nav");
+addEventListener("scroll",()=>{nav.classList.toggle("scrolled",scrollY>40);const h=document.documentElement.scrollHeight-innerHeight;document.getElementById("progress").style.transform=`scaleX(${h?scrollY/h:0})`},{passive:true});
+
+const menu=document.getElementById("menu"),navlinks=document.getElementById("navlinks");
+menu.onclick=()=>navlinks.classList.toggle("open");
+document.querySelectorAll(".navlinks a").forEach(a=>a.onclick=()=>navlinks.classList.remove("open"));
+
+if("IntersectionObserver" in window){
+ const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("show");io.unobserve(e.target)}}),{threshold:.08});
+ document.querySelectorAll(".reveal").forEach(x=>io.observe(x));
+}
+
+document.getElementById("contactForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const f=e.target,msg=document.getElementById("formMsg");
+ if(!f.name.value.trim()||!f.email.value.trim()||!f.message.value.trim()){msg.textContent="Please fill in the required fields.";return}
+ const subject=encodeURIComponent("[Phantom Frames] "+f.type.value);
+ const body=encodeURIComponent(`Name: ${f.name.value}\nEmail: ${f.email.value}\nProject Type: ${f.type.value}\nBudget: ${f.budget.value}\n\n${f.message.value}`);
+ location.href=`mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+ msg.textContent="Opening your email app…";
 });
-$$("#contactForm input, #contactForm textarea").forEach(i => i.addEventListener("input", () => i.removeAttribute("aria-invalid")));
 </script>
 </body>
 </html>
